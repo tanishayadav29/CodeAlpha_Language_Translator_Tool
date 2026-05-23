@@ -1,4 +1,4 @@
-# 🌍 Language Translator Tool (CodeAlpha Internship Project)
+# 🌍 Language Translator Tool
 
 ## 📌 Description
 This is a simple AI-based Language Translator web application built using Python and Streamlit. It allows users to translate text between multiple languages and listen to the translated output using text-to-speech.
