@@ -57,8 +57,7 @@ Translated text can be listened to using Google Text-to-Speech (gTTS) directly i
 
 ---
 
-## 👩‍💻 Author
-CodeAlpha Internship Project  
+## 👩‍💻 Author 
 Developed by: Tanisha Yadav  
 
 ---
