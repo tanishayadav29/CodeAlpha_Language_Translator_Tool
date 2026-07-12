@@ -39,10 +39,7 @@ with col2:
     target_lang = st.selectbox("To", list(languages.keys()))
 
 # ---------- TRANSLATE ----------
-translated_text = ""
-
 if st.button("Translate"):
-
     if text.strip() == "":
         st.warning("Please enter some text")
     else:
@@ -52,32 +49,35 @@ if st.button("Translate"):
         ).translate(text)
 
         st.session_state["translated"] = translated_text
+        st.session_state["target_lang"] = languages[target_lang]
 
 # ---------- OUTPUT ----------
 if "translated" in st.session_state:
-
     st.markdown("### 📄 Translated Text")
     st.success(st.session_state["translated"])
-
-    # COPY BUTTON
     st.code(st.session_state["translated"])
 
-    # ---------- TEXT TO SPEECH ----------
     if st.button("🔊 Listen Translation"):
+        try:
+            # gTTS uses "zh-CN" differently, so convert it to "zh-cn"
+            audio_lang = st.session_state["target_lang"].lower()
 
-        tts = gTTS(
-            text=st.session_state["translated"],
-            lang=languages[target_lang]
-        )
+            tts = gTTS(
+                text=st.session_state["translated"],
+                lang=audio_lang
+            )
 
-        audio_file = "speech.mp3"
-        tts.save(audio_file)
+            audio_file = "speech.mp3"
+            tts.save(audio_file)
 
-        audio_bytes = open(audio_file, "rb").read()
-        st.audio(audio_bytes, format="audio/mp3")
+            with open(audio_file, "rb") as f:
+                audio_bytes = f.read()
 
-        st.success("Playing Audio... 🎧")
+            st.audio(audio_bytes, format="audio/mpeg")
 
+        except Exception as e:
+            st.error(f"Audio error: {e}")
+            
 # ---------- FOOTER ----------
 st.markdown("---")
 st.caption("Built with Python + Streamlit + Google Translator API")
